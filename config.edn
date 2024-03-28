@@ -1,0 +1,2 @@
+{:bubble-config/root #env{:dev {:db "db/dev.sqlite"
+                                :schema "db/schema.sql"}}}

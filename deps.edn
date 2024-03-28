@@ -1,0 +1,5 @@
+{:paths ["src"]
+ :deps  {io.github.eval/bubble-config     {:git/sha "3056c306276dd435f48f29a7657a109d0e25a98f"}
+         #_#_dk.thinkcreate/bubble-config {:local/root "/Users/gert/projects/bb-config/bb-config"}
+         com.github.seancorfield/honeysql {:mvn/version "2.5.1103"}
+         babashka/fs                      {:mvn/version "0.5.20"}}}

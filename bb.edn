@@ -1,0 +1,29 @@
+{:deps {;; use deps.edn
+        io.github.eval/bubble-up {:local/root "."}}
+ :tasks
+ {:init
+  (do
+    ;; 🫧 🫧 🫧
+    (defn config [ks]
+      (get-in (exec 'bubble-config.core/config) ks))
+
+    (defn first-arg [& {fallback :else}]
+      (or (and (= 1 (count *command-line-args*))
+               (first *command-line-args*))
+          fallback)))
+
+  config:print (exec 'bubble-config.core/print)
+
+  db {:doc      "[] Open litecli with env-specific db-file"
+      :requires ([bubble-config.core])
+      :task     (shell "litecli"
+                       (first-arg :else (config [:db])))}
+
+  db:schema {:doc      "[] Print schema"
+             :requires ([bubble-config.core])
+             :task     (shell "sqlite3"
+                              (first-arg :else (config [:db]))
+                              ".schema")}
+
+  db:migrate (exec 'bubble-up.main/migrate-cmd
+                   {:exec-args (config [])})}}
